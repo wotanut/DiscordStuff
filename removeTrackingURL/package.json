@@ -1,0 +1,19 @@
+{
+  "name": "removetrackingurl",
+  "version": "1.0.0",
+  "description": "Removes tracking URLS from certain websites",
+  "main": "index.js",
+  "scripts": {
+    "build": "zpl build",
+    "init": "zpl init"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wotanut/discordPlugins/removeTrackingURL"
+  },
+  "author": "wotanut",
+  "license": "ISC",
+  "dependencies": {
+    "zerespluginlibrary": "^2.0.6"
+  }
+}

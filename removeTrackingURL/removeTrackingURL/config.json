@@ -1,0 +1,20 @@
+{
+    "main": "index.js",
+    "id": "705798778472366131",
+    "name": "removeTrackingURL",
+    "author": "wotanut",
+    "authorId": "705798778472366131",
+    "authorLink": "https://github.com/wotanut",
+    "version": "1.0.0",
+    "description": "Removes tracking URLS from certain websites",
+    "website": "https://github.com/wotanut",
+    "github": "https://github.com/wotanut/removeTrackingURL",
+    "github_raw": "",
+    "donate": "https://ko-fi.com/wotanut",
+    "invite": "2w5KSXjhGe",
+    "changelog": [
+        {"title": "New Stuff", "items": ["Base plugin configuration", "Added changelog"]},
+        {"title": "On-going", "type": "progress", "items": ["Actual Development"]}
+    ],
+    "defaultConfig": []
+}
