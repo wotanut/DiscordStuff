@@ -1,0 +1,1 @@
+# removes all the tracking urls from the links you send in discord
