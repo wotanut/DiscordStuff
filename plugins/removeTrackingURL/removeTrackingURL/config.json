@@ -17,8 +17,7 @@
         "invite": "2w5KSXjhGe"
     },
     "changelog": [
-        {"title": "New Stuff", "items": ["Base plugin configuration.", "Added changelog."]},
-        {"title": "On-going", "type": "progress", "items": ["Actual Development"]}
+        {"title": "New Stuff", "items": ["The plugin is done :D"]}
     ],
     "defaultConfig": [
 

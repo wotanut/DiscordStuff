@@ -56,15 +56,7 @@ const config = {
         {
             title: "New Stuff",
             items: [
-                "Base plugin configuration.",
-                "Added changelog."
-            ]
-        },
-        {
-            title: "On-going",
-            type: "progress",
-            items: [
-                "Actual Development"
+                "The plugin is done :D"
             ]
         }
     ],
