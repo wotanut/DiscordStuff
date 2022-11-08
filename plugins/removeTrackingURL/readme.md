@@ -1,7 +1,7 @@
 <div align="center">
     <h1>removeTrackingURL</h1>
     <p>Removes tracking URL from links</p>
-    <img alt="Discord" src="https://img.shields.io/discord/939479619587952640?logo=discord&style=for-the-badge">  <img alt="GitHub followers" src="https://img.shields.io/github/followers/wotanut?logo=github&style=for-the-badge">
+    <a href="https://discord.gg/2w5KSXjhGe"><img alt="Discord" src="https://img.shields.io/discord/939479619587952640?logo=discord&style=for-the-badge"></a>  <a href="https://github.com/wotanut"><img alt="GitHub followers" src="https://img.shields.io/github/followers/wotanut?logo=github&style=for-the-badge"></a>
 </div>
 
 <br>
@@ -9,7 +9,7 @@
 <div align="center">
     <h2> What is this?</h2>
     <p> This is a plugin that automatically removes trackers from supported urls. Notice when you go to twitter and you see a tweet you like, if you click the share button and you paste it in to discord there's a bunch of crap after the question mark. </p>
-    <img src="imgs/inital.png>" alt="initial"></img>
+    <img src="imgs/inital.png" alt="initial">
     <p>Well this is actually a bunch of tracking information so daddy elon can know what you're up to.</p>
     <p> <i> So I can just remove it right? </i></p>
     <p> Good luck with that one. </p>
