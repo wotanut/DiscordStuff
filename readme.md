@@ -17,7 +17,7 @@
 # Themes
 
 # Support
-If you would like to support these projects then please cnosider the following
+If you would like to support these projects then please consider the following
 - [Joining my Discord Server](https://discord.gg/2w5KSXjhGe)
 - [Donating to me on Ko-Fi](https://ko-fi.com/wotanut)
 - [Starring this repository](#)
