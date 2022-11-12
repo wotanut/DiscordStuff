@@ -17,8 +17,6 @@
 # Themes
 
 # Support
-If you have any questions, feel free to join the [Discord server](https://discord.gg/2Z3Z7Z9) or DM me on Discord: `wotanut#0001`
-
 If you would like to support these projects then please cnosider the following
 - [Joining my Discord Server](https://discord.gg/2w5KSXjhGe)
 - [Donating to me on Ko-Fi](https://ko-fi.com/wotanut)
