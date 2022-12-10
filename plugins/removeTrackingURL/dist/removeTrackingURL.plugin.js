@@ -103,6 +103,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             this.defaultSettings = {};
             this.defaultSettings.twitter = true;
             this.defaultSettings.reddit = true;
+            this.defaultSettings.showToasts = false;
 
             this.defaultSettings.FXtwitter = false;
             this.defaultSettings.VXtwitter = false;
@@ -134,7 +135,11 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                         else if(this.settings.VXtwitter) {
                             msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
                         }
-                        Toasts.success("Succesfully removed tracker from twitter link!");
+
+                        if (this.settings.showToasts)
+                        {
+                            Toasts.success("Succesfully removed tracker from twitter link!");
+                        }
                     }
                 }
 
@@ -149,7 +154,10 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 
                         msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/\w+\/[_=&a-z1-9]*)/g, post);
 
-                        Toasts.success("Succesfully removed tracker from reddit link!");
+                        if (this.settings.showToasts)
+                        {
+                            Toasts.success("Succesfully removed tracker from reddit link!");
+                        }
                     }
                 }
 
@@ -168,6 +176,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             return Settings.SettingPanel.build(this.saveSettings.bind(this), 
                 new Settings.Switch("Twitter","Remove twitter tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
                 new Settings.Switch("Reddit","Remove reddit tracking URL", this.settings.reddit, (i) => {this.settings.reddit = i;}),
+                new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => {this.settings.showToasts = i;}),
 
                 new Settings.SettingGroup("Advanced").append(
                     new Settings.Switch("FXtwitter","Automatically convert twitter links to FXtwitter links", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
