@@ -65,7 +65,12 @@ module.exports = (Plugin, Library) => {
                     if (msgcontent.includes("https://www.reddit.com")){
                         const post = /(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/\w+\/)/g.exec(msgcontent)[0];
 
-                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/\w+\/[_=&a-z1-9]*)/g, post);
+                        Logger.info(post)
+                        Logger.info(msgcontent)
+
+                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post);
+
+                        Logger.info(msgcontent)
 
                         if (this.settings.showToasts)
                         {

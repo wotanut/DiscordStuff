@@ -1,10 +1,10 @@
 /**
  * @name removeTrackingURL
  * @description Removes tracking URLS from certain websites
- * @version 1.0.0
+ * @version 1.0.1
  * @author wotanut
  * @authorId 705798778472366131
- * @website https://github.com/wotanut
+ * @website https://sblue.tech
  * @source https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/removeTrackingURL/dist/removeTrackingURL.plugin.js?token=GHSAT0AAAAAABYFCAO3ZC3LX7WVQBVZVOR2Y3EJB7Q
  * @donate https://ko-fi.com/wotanut
  * @invite 2w5KSXjhGe
@@ -44,10 +44,10 @@ const config = {
                 authorLink: "https://github.com/wotanut"
             }
         ],
-        version: "1.0.0",
+        version: "1.0.1",
         description: "Removes tracking URLS from certain websites",
-        website: "https://github.com/wotanut",
-        github: "https://github.com/wotanut/removeTrackingURL",
+        website: "https://sblue.tech",
+        github: "https://github.com/wotanut/betterdiscordstuff",
         github_raw: "https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/removeTrackingURL/dist/removeTrackingURL.plugin.js?token=GHSAT0AAAAAABYFCAO3ZC3LX7WVQBVZVOR2Y3EJB7Q",
         donate: "https://ko-fi.com/wotanut",
         invite: "2w5KSXjhGe"
@@ -56,7 +56,15 @@ const config = {
         {
             title: "New Stuff",
             items: [
-                "The plugin is done :D"
+                "Option to show toast when a tracking URL is removed"
+            ]
+        },
+        {
+            title: "Bug Fixes",
+            type: "fixed",
+            items: [
+                "Fixed a bug where the plugin would not change reddit links",
+                "Incorrect external links in settings panel"
             ]
         }
     ],
@@ -152,7 +160,12 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                     if (msgcontent.includes("https://www.reddit.com")){
                         const post = /(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/\w+\/)/g.exec(msgcontent)[0];
 
-                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/\w+\/[_=&a-z1-9]*)/g, post);
+                        Logger.info(post)
+                        Logger.info(msgcontent)
+
+                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post);
+
+                        Logger.info(msgcontent)
 
                         if (this.settings.showToasts)
                         {

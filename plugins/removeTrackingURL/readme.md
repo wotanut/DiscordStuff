@@ -1,8 +1,10 @@
 <div align="center">
     <h1>removeTrackingURL</h1>
     <p>Removes tracking URL from links</p>
-    <a href="https://discord.gg/2w5KSXjhGe"><img alt="Discord" src="https://img.shields.io/discord/939479619587952640?logo=discord&style=for-the-badge"></a>  <a href="https://github.com/wotanut"><img alt="GitHub followers" src="https://img.shields.io/github/followers/wotanut?logo=github&style=for-the-badge"></a>
+    <a href="https://discord.gg/2w5KSXjhGe"><img alt="Discord" src="https://img.shields.io/discord/939479619587952640?logo=discord&style=for-the-badge"></a>  <a href="https://github.com/wotanut"><img alt="GitHub followers" src="https://img.shields.io/github/followers/wotanut?logo=github&style=for-the-badge"></a> <a href=" https://github.com/sponsors/wotanut"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/wotanut?style=for-the-badge"></a>
 </div>
+
+<img src="https://github.com/wotanut/wotanut/blob/main/banner.gif?raw=true">
 
 <br>
 
