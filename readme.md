@@ -31,6 +31,7 @@ Should you want to compile the plugins yourself or you want to contribute to the
 
 ## Plugins
 - [RemoveTrackingURL](https://github.com/wotanut/BetterDiscordStuff/tree/main/plugins/removeTrackingURL)
+- [lmgt](https://github.com/wotanut/BetterDiscordStuff/tree/main/plugins/lmgt)
 
 <!-- Themes -->
 
