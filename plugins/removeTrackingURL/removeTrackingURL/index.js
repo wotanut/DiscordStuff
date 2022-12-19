@@ -23,11 +23,8 @@ module.exports = (Plugin, Library) => {
             this.defaultSettings.VXtwitter = false;
         }
 
-        onStart() {
-            Logger.info("Enabling removeTrackingURL!");
-
-            Patcher.before(DiscordModules.MessageActions, "sendMessage", (t,a) => {
-                var msgcontent = a[1].content
+        removeTracker(event) {
+            var msgcontent = event[1].content
                 // twitter
 
                 // example of a twitter link 
@@ -40,8 +37,9 @@ module.exports = (Plugin, Library) => {
                         // if it includes the twitter url then it'll flow down here and appropriately remove the trackers and update the url.
                         // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use FXtwitter.
 
-                        const tweet = /(https:\/\/twitter.com\/\w+\/status\/\d+)/g.exec(msgcontent)[0];
-                        msgcontent = msgcontent.replace(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g, tweet);
+                        var tweet = new URL(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g.exec(msgcontent));
+
+                        msgcontent = msgcontent.replace(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g, tweet.origin + tweet.pathname);
 
                         if (this.settings.FXtwitter) {
                             msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
@@ -64,14 +62,9 @@ module.exports = (Plugin, Library) => {
 
                 if (this.settings.reddit) {
                     if (msgcontent.includes("https://www.reddit.com")){
-                        const post = /(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/\w+\/)/g.exec(msgcontent)[0];
+                        var post = new URL(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g.exec(msgcontent));
 
-                        Logger.info(post)
-                        Logger.info(msgcontent)
-
-                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post);
-
-                        Logger.info(msgcontent)
+                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post.origin + post.pathname);
 
                         if (this.settings.showToasts)
                         {
@@ -81,9 +74,26 @@ module.exports = (Plugin, Library) => {
                 }
 
                 // Changes our new message back to the original message
-                a[1].content = msgcontent;
+                return msgcontent;
+        }
 
+        onStart() {
+            Logger.info("Enabling removeTrackingURL!");
+
+            // for removing trackers on sent messages
+
+            Patcher.before(DiscordModules.MessageActions, "sendMessage", (t,a) => {
+                a[1].content = this.removeTracker(a);
             });
+
+            // for removing trackers on incoming messages (assuming you have the project setting enabled)
+
+            Patcher.before(DiscordModules.MessageActions, "", (t,a) => {
+                if (this.settings.project) {
+                    a[1].content = this.removeTracker(a);
+                }
+            });
+
         }
 
         onStop() {
