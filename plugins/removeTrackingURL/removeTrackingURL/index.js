@@ -7,7 +7,7 @@
 module.exports = (Plugin, Library) => {
 
     const {DiscordModules, Logger, Patcher, Settings, Toasts} = Library;
-    const {MessageActions,} = DiscordModules;
+    const {MessageActions, Dispatcher} = DiscordModules;
 
     
     return class extends Plugin {
@@ -23,8 +23,13 @@ module.exports = (Plugin, Library) => {
             this.defaultSettings.VXtwitter = false;
         }
 
-        removeTracker(event) {
-            var msgcontent = event[1].content
+        removeTracker(event, isFromSomeoneEsle = false) {
+            if (isFromSomeoneEsle) {
+                var msgcontent = event
+            }
+            else{
+                var msgcontent = event[1].content
+            }
                 // twitter
 
                 // example of a twitter link 
@@ -48,7 +53,7 @@ module.exports = (Plugin, Library) => {
                             msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
                         }
 
-                        if (this.settings.showToasts)
+                        if (this.settings.showToasts && isFromSomeoneEsle == false)
                         {
                             Toasts.success("Succesfully removed tracker from twitter link!");
                         }
@@ -66,7 +71,7 @@ module.exports = (Plugin, Library) => {
 
                         msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post.origin + post.pathname);
 
-                        if (this.settings.showToasts)
+                        if (this.settings.showToasts && isFromSomeoneEsle == false)
                         {
                             Toasts.success("Succesfully removed tracker from reddit link!");
                         }
@@ -83,15 +88,28 @@ module.exports = (Plugin, Library) => {
             // for removing trackers on sent messages
 
             Patcher.before(DiscordModules.MessageActions, "sendMessage", (t,a) => {
-                a[1].content = this.removeTracker(a);
+                a[1].content = this.removeTracker(a,false);
             });
 
             // for removing trackers on incoming messages (assuming you have the project setting enabled)
 
-            Patcher.before(DiscordModules.MessageActions, "", (t,a) => {
-                if (this.settings.project) {
-                    a[1].content = this.removeTracker(a);
-                }
+            Patcher.before(Dispatcher, "dispatch", (_, args) => {
+                    var event = args[0]
+   
+                    // Logger.info(event.type);
+   
+                    if (event.type === "MESSAGE_CREATE") {
+                        if (this.settings.project) {
+                            if (event.message.content.includes(".reddit.com") == false && event.message.content.includes(".twitter.com") == false){
+                                return;
+                            }
+                            if (event.message.author.id == DiscordModules.UserStore.getCurrentUser().id) {
+                                return;
+                            }
+                            event.message.content = this.removeTracker(event.message.content,true);
+                            Logger.info("Removed Message");
+                        }
+                    }
             });
 
         }
