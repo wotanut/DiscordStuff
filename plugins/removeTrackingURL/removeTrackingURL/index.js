@@ -17,7 +17,7 @@ module.exports = (Plugin, Library) => {
             this.defaultSettings.twitter = true;
             this.defaultSettings.reddit = true;
             this.defaultSettings.showToasts = false;
-            this.defaultSettings.mirror = true;
+            this.defaultSettings.project = true;
 
             this.defaultSettings.FXtwitter = false;
             this.defaultSettings.VXtwitter = false;
@@ -96,7 +96,7 @@ module.exports = (Plugin, Library) => {
                 new Settings.Switch("Twitter","Remove twitter tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
                 new Settings.Switch("Reddit","Remove reddit tracking URL", this.settings.reddit, (i) => {this.settings.reddit = i;}),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => {this.settings.showToasts = i;}),
-                new Settings.Switch("Mirror", "When recieving an incoming meesage, remove trackeds from that too.", this.settings.mirror, (i) => {this.settings.mirror = i;}),
+                new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => {this.settings.project = i;}),
 
                 new Settings.SettingGroup("Advanced").append(
                     new Settings.Switch("FXtwitter","Automatically convert twitter links to FXtwitter links", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
