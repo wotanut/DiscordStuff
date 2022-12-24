@@ -8,7 +8,7 @@
             "twitter_username": "wotanut1",
             "authorLink": "https://github.com/wotanut"
         }],
-        "version": "1.0.2",
+        "version": "1.0.3",
         "description": "Removes tracking URLS from certain websites",
         "website": "https://sblue.tech",
         "github": "https://github.com/wotanut/betterdiscordstuff",
@@ -17,7 +17,7 @@
         "invite": "2w5KSXjhGe"
     },
     "changelog": [
-        {"title": "New Stuff", "items": ["Added mirror settings", "Changed internals"]},
+        {"title": "New Stuff", "items": ["Added mirror settings", "Changed internals", "Moved file around"]},
         {"title": "Bug Fixes", "type" : "fixed", "items": ["Fixed a bug where the plugin would not change reddit links","Incorrect external links in settings panel"]}
     ],
     "defaultConfig": [

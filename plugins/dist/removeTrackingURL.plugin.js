@@ -1,7 +1,7 @@
 /**
  * @name removeTrackingURL
  * @description Removes tracking URLS from certain websites
- * @version 1.0.2
+ * @version 1.0.3
  * @author Sambot
  * @authorId 705798778472366131
  * @website https://sblue.tech
@@ -44,7 +44,7 @@ const config = {
                 authorLink: "https://github.com/wotanut"
             }
         ],
-        version: "1.0.2",
+        version: "1.0.3",
         description: "Removes tracking URLS from certain websites",
         website: "https://sblue.tech",
         github: "https://github.com/wotanut/betterdiscordstuff",
@@ -57,7 +57,8 @@ const config = {
             title: "New Stuff",
             items: [
                 "Added mirror settings",
-                "Changed internals"
+                "Changed internals",
+                "Moved file around"
             ]
         },
         {
