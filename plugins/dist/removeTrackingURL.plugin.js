@@ -1,11 +1,11 @@
 /**
  * @name removeTrackingURL
  * @description Removes tracking URLS from certain websites
- * @version 1.0.3
+ * @version 1.0.4
  * @author Sambot
  * @authorId 705798778472366131
  * @website https://sblue.tech
- * @source https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/removeTrackingURL/dist/removeTrackingURL.plugin.js?token=GHSAT0AAAAAABYFCAO3ZC3LX7WVQBVZVOR2Y3EJB7Q
+ * @source https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/removeTrackingURL.plugin.js
  * @donate https://ko-fi.com/wotanut
  * @invite 2w5KSXjhGe
  */
@@ -44,11 +44,11 @@ const config = {
                 authorLink: "https://github.com/wotanut"
             }
         ],
-        version: "1.0.3",
+        version: "1.0.4",
         description: "Removes tracking URLS from certain websites",
         website: "https://sblue.tech",
         github: "https://github.com/wotanut/betterdiscordstuff",
-        github_raw: "https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/removeTrackingURL/dist/removeTrackingURL.plugin.js?token=GHSAT0AAAAAABYFCAO3ZC3LX7WVQBVZVOR2Y3EJB7Q",
+        github_raw: "https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/removeTrackingURL.plugin.js",
         donate: "https://ko-fi.com/wotanut",
         invite: "2w5KSXjhGe"
     },
