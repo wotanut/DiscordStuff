@@ -24,10 +24,9 @@
 ## Building from source
 Should you want to compile the plugins yourself or you want to contribute to the project then you can do so by following these steps
 1. Clone the repository
-2. Navigate to the directory of the plugin you would like to build
-3. Run `npm i`
-4. Run `npm run build {pluginName}` to build the plugins
-5. Go to discord and enable the plugin in the settings
+2. Run `npm i`
+3. Run `npm run build {pluginName}` to build the plugins
+4. Go to discord and enable the plugin in the settings
 
 ## Plugins
 - [RemoveTrackingURL](https://github.com/wotanut/BetterDiscordStuff/tree/main/plugins/removeTrackingURL)
