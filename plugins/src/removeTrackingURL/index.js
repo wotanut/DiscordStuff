@@ -40,17 +40,17 @@ module.exports = (Plugin, Library) => {
                     if (msgcontent.includes("https://twitter.com")) {
 
                         // if it includes the twitter url then it'll flow down here and appropriately remove the trackers and update the url.
-                        // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use FXtwitter.
+                        // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
 
                         var tweet = new URL(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g.exec(msgcontent));
 
                         msgcontent = msgcontent.replace(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g, tweet.origin + tweet.pathname);
 
-                        if (this.settings.FXtwitter) {
-                            msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
-                        }
-                        else if(this.settings.VXtwitter) {
+                        if (this.settings.VXtwitter) {
                             msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
+                        }
+                        else if(this.settings.FXtwitter) {
+                            msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
                         }
 
                         if (this.settings.showToasts && isFromSomeoneEsle == false)
@@ -67,9 +67,9 @@ module.exports = (Plugin, Library) => {
 
                 if (this.settings.reddit) {
                     if (msgcontent.includes("https://www.reddit.com")){
-                        var post = new URL(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g.exec(msgcontent));
+                        var post = new URL(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g.exec(msgcontent));
 
-                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post.origin + post.pathname);
+                        msgcontent = msgcontent.replace(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g, post.origin + post.pathname);
 
                         if (this.settings.showToasts && isFromSomeoneEsle == false)
                         {

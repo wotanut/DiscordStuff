@@ -1,12 +1,12 @@
 /**
  * @name removeTrackingURL
  * @description Removes tracking URLS from certain websites
- * @version 1.0.4
+ * @version 1.0.5
  * @author Sambot
  * @authorId 705798778472366131
  * @website https://sblue.tech
  * @source https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/removeTrackingURL.plugin.js
- * @donate https://ko-fi.com/wotanut
+ * @donate https://github.com/sponsors/wotanut
  * @invite 2w5KSXjhGe
  */
 /*@cc_on
@@ -44,12 +44,12 @@ const config = {
                 authorLink: "https://github.com/wotanut"
             }
         ],
-        version: "1.0.4",
+        version: "1.0.5",
         description: "Removes tracking URLS from certain websites",
         website: "https://sblue.tech",
         github: "https://github.com/wotanut/betterdiscordstuff",
         github_raw: "https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/removeTrackingURL.plugin.js",
-        donate: "https://ko-fi.com/wotanut",
+        donate: "https://github.com/sponsors/wotanut",
         invite: "2w5KSXjhGe"
     },
     changelog: [
@@ -65,8 +65,7 @@ const config = {
             title: "Bug Fixes",
             type: "fixed",
             items: [
-                "Fixed a bug where the plugin would not change reddit links",
-                "Incorrect external links in settings panel"
+                "Fixed a bug where the plugin would not change reddit links"
             ]
         }
     ],
@@ -137,17 +136,17 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                     if (msgcontent.includes("https://twitter.com")) {
 
                         // if it includes the twitter url then it'll flow down here and appropriately remove the trackers and update the url.
-                        // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use FXtwitter.
+                        // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
 
                         var tweet = new URL(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g.exec(msgcontent));
 
                         msgcontent = msgcontent.replace(/(https:\/\/twitter.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g, tweet.origin + tweet.pathname);
 
-                        if (this.settings.FXtwitter) {
-                            msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
-                        }
-                        else if(this.settings.VXtwitter) {
+                        if (this.settings.VXtwitter) {
                             msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
+                        }
+                        else if(this.settings.FXtwitter) {
+                            msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
                         }
 
                         if (this.settings.showToasts && isFromSomeoneEsle == false)
@@ -164,9 +163,9 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 
                 if (this.settings.reddit) {
                     if (msgcontent.includes("https://www.reddit.com")){
-                        var post = new URL(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g.exec(msgcontent));
+                        var post = new URL(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g.exec(msgcontent));
 
-                        msgcontent = msgcontent.replace(/(https:\/\/www.reddit.com\/r\/\w+\/comments\/\w+\/[_=&a-z1-9]*\/[?a-z_=&1-9]*)/g, post.origin + post.pathname);
+                        msgcontent = msgcontent.replace(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g, post.origin + post.pathname);
 
                         if (this.settings.showToasts && isFromSomeoneEsle == false)
                         {
