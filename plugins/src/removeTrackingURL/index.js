@@ -69,7 +69,10 @@ module.exports = (Plugin, Library) => {
                     if (msgcontent.includes("https://www.reddit.com")){
                         var post = new URL(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g.exec(msgcontent));
 
-                        msgcontent = msgcontent.replace(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g, post.origin + post.pathname);
+                        msgcontent = msgcontent.replace(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g, post.origin + post.pathname.split(",")[0]);
+
+                        // NOTE: The .split is required becuase of this issue
+                        // https://stackoverflow.com/questions/74923286/url-pathname-sending-the-pathname-followed-by-https-www
 
                         if (this.settings.showToasts && isFromSomeoneEsle == false)
                         {

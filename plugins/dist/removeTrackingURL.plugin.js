@@ -1,7 +1,7 @@
 /**
  * @name removeTrackingURL
  * @description Removes tracking URLS from certain websites
- * @version 1.0.5
+ * @version 1.0.6
  * @author Sambot
  * @authorId 705798778472366131
  * @website https://sblue.tech
@@ -44,7 +44,7 @@ const config = {
                 authorLink: "https://github.com/wotanut"
             }
         ],
-        version: "1.0.5",
+        version: "1.0.6",
         description: "Removes tracking URLS from certain websites",
         website: "https://sblue.tech",
         github: "https://github.com/wotanut/betterdiscordstuff",
@@ -65,7 +65,8 @@ const config = {
             title: "Bug Fixes",
             type: "fixed",
             items: [
-                "Fixed a bug where the plugin would not change reddit links"
+                "Fixed a bug where the plugin would not change reddit links",
+                "Fixed a bug where plugin would send http,www after removing trackers."
             ]
         }
     ],
@@ -165,7 +166,10 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                     if (msgcontent.includes("https://www.reddit.com")){
                         var post = new URL(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g.exec(msgcontent));
 
-                        msgcontent = msgcontent.replace(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g, post.origin + post.pathname);
+                        msgcontent = msgcontent.replace(/(https|http)\:\/\/(www\.)?reddit\.com\/\S+/g, post.origin + post.pathname.split(",")[0]);
+
+                        // NOTE: The .split is required becuase of this issue
+                        // https://stackoverflow.com/questions/74923286/url-pathname-sending-the-pathname-followed-by-https-www
 
                         if (this.settings.showToasts && isFromSomeoneEsle == false)
                         {
