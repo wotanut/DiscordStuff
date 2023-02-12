@@ -29,7 +29,7 @@ Should you want to compile the plugins yourself or you want to contribute to the
 4. Go to discord and enable the plugin in the settings
 
 ## Plugins
-- [RemoveTrackingURL](https://github.com/wotanut/BetterDiscordStuff/tree/main/plugins/removeTrackingURL)
+- [RemoveTrackingURL](https://betterdiscord.app/plugin/removeTrackingURL)
 - [lmgt](https://github.com/wotanut/BetterDiscordStuff/tree/main/plugins/lmgt)
 
 <!-- Themes -->
