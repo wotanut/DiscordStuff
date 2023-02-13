@@ -3,9 +3,7 @@ Discord Stuff
 
 Plugins and themes that I’ve made for discord
 
-[![“Discord”][discord]](“https://discord.gg/2w5KSXjhGe”) [![“GitHub][github]](“https://github.com/wotanut”) [![“GitHub Sponsors][github_sponsors]](“https://github.com/sponsors/wotanut")
-
-<img src=“https://raw.githubusercontent.com/wotanut/wotanut/main/banner.gif”>
+[![Discord][discord_badge]][discord_link] [![“GitHub][github_badge]][github_link] [![“GitHub Sponsors][github_sponsors_badge]][github_sponsors]
 
 ## Plugins
 - [RemoveTrackingURL](https://betterdiscord.app/plugin/removeTrackingURL)
@@ -13,7 +11,7 @@ Plugins and themes that I’ve made for discord
 
 
 ## Support
-Support is available on my [Discord Server](https://discord.gg/2w5KSXjhGe) in the discord addons channel.
+Support is available on my [Discord Server](discord_link) in the discord addons channel.
 
 ## Support Me
 If you would like to support these projects then please consider the following
@@ -22,6 +20,11 @@ If you would like to support these projects then please consider the following
 - [Starring this repository](https://github.com/wotanut/discordstuff)
 - [Following me on GitHub](https://github.com/wotanut)
 
-[discord]: “https://img.shields.io/discord/939479619587952640?logo=discord&style=for-the-badge”
-[github]: “https://img.shields.io/github/followers/wotanut?logo=github&style=for-the-badge”
-[github_sponsors]: “https://img.shields.io/github/sponsors/wotanut?style=for-the-badge”
+[discord_badge]: https://img.shields.io/discord/939479619587952640?style=for-the-badge
+[github_badge]: https://img.shields.io/github/followers/wotanut?style=for-the-badge
+[github_sponsors_badge]: https://img.shields.io/github/sponsors/wotanut?style=for-the-badge
+
+
+[discord_link]: “https://discord.gg/2w5KSXjhGe”
+[github_link]: “https://github.com/wotanut”
+[github_sponsors]: “https://github.com/sponsors/wotanut"
