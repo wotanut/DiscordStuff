@@ -5,6 +5,8 @@ Plugins and themes that I’ve made for discord
 
 [![Discord][discord_badge]][discord_link] [![“GitHub][github_badge]][github_link] [![“GitHub Sponsors][github_sponsors_badge]][github_sponsors]
 
+<img src="https://github.com/wotanut/wotanut/blob/main/banner.gif?raw=true">
+
 ## Plugins
 - [RemoveTrackingURL](https://betterdiscord.app/plugin/removeTrackingURL)
 - [lmgt](https://github.com/wotanut/BetterDiscordStuff/tree/main/plugins/lmgt)
