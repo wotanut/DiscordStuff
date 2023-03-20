@@ -17,8 +17,7 @@
         "invite": "2w5KSXjhGe"
     },
     "changelog": [
-        {"title": "New Stuff", "items": ["Added mirror settings", "Changed internals", "Moved file around"]},
-        {"title": "Bug Fixes", "type" : "fixed", "items": ["Fixed a bug where the plugin would not change reddit links", "Fixed a bug where plugin would send http,www after removing trackers."]}
+        {"title": "Bug Fixes", "type" : "fixed", "items": ["Made code more readable.", "Fixed bug where plugin would crash if no trackers were present."]}
     ],
     "defaultConfig": [
 
