@@ -17,15 +17,10 @@
 
 <div align="center">
     <h2>Installation </h2>
-    <p>This plugin is only available to vencord. As such, installation is managed through Settings -> Plugins and then enabling lmgt.</p>
+    <p>This plugin is only available to vencord. As such, installation is managed through Settings, open quickCSS folder, navigate up to the directory with "plugins" and create a folder called "userplugins" then drop this file in there.</p>
 </div>
 
 <br>
-
-<div align="center">
-    <h2>Why?</h2>
-    <p> Vencord is by far one of (if not the) best discord mod i've seen so far, I wanted to get in early and add "my mark" to the project, as this plugin is found on almost every other mod, I thought i'd be the first to attempt this plugin and try it out.</p>
-</div>
 
 <br>
 

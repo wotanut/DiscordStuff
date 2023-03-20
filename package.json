@@ -1,5 +1,16 @@
 {
   "dependencies": {
-    "bd-scss": "^2.0.12"
+    "bd-scss": "^2.0.12",
+    "zerespluginlibrary": "^2.0.6"
+  },
+  "scripts": {
+    "build": "zpl build",
+    "init": "zpl init"
+  },
+  "zplConfig": {
+    "base": "./plugins/src",
+    "out": "./plugins/dist",
+    "copyToBD": true,
+    "addInstallScript": true
   }
 }

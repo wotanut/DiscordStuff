@@ -1,11 +1,11 @@
 /**
- * @name BetterIcons
- * @description Changes the icons around discord
- * @version 1.0.0
- * @author wotanut
+ * @name reviewDB
+ * @description Review and see reviews of other users 
+ * @version 1.0.4
+ * @author Sambot
  * @authorId 705798778472366131
- * @website https://github.com/wotanut
- * @source https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/BetterIcons/dist/BetterIcons.plugin.js
+ * @website https://sblue.tech
+ * @source https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/reviewDB.plugin.js
  * @donate https://ko-fi.com/wotanut
  * @invite 2w5KSXjhGe
  */
@@ -34,21 +34,21 @@
 @else@*/
 const config = {
     info: {
-        name: "BetterIcons",
+        name: "reviewDB",
         authors: [
             {
-                name: "wotanut",
+                name: "Sambot",
                 discord_id: "705798778472366131",
                 github_username: "wotanut",
                 twitter_username: "wotanut1",
                 authorLink: "https://github.com/wotanut"
             }
         ],
-        version: "1.0.0",
-        description: "Changes the icons around discord",
-        website: "https://github.com/wotanut",
-        github: "https://github.com/wotanut/BetterIcons",
-        github_raw: "https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/BetterIcons/dist/BetterIcons.plugin.js",
+        version: "1.0.4",
+        description: "Review and see reviews of other users ",
+        website: "https://sblue.tech",
+        github: "https://github.com/wotanut/betterdiscordstuff",
+        github_raw: "https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/reviewDB.plugin.js",
         donate: "https://ko-fi.com/wotanut",
         invite: "2w5KSXjhGe"
     },
@@ -56,7 +56,17 @@ const config = {
         {
             title: "New Stuff",
             items: [
-                "The plugin is done :D"
+                "Added mirror settings",
+                "Changed internals",
+                "Moved file around"
+            ]
+        },
+        {
+            title: "Bug Fixes",
+            type: "fixed",
+            items: [
+                "Fixed a bug where the plugin would not change reddit links",
+                "Incorrect external links in settings panel"
             ]
         }
     ],
@@ -93,46 +103,38 @@ if (!global.ZeresPluginLibrary) {
 module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
      const plugin = (Plugin, Library) => {
 
-    const {DiscordModules, Logger, Patcher, Settings, Toasts} = Library;
-    const {MessageActions,Dispatcher, ChannelStore} = DiscordModules;
+    const {Logger, Patcher, Settings, DiscordModules} = Library;
+
+    const { UserNoteStore } = DiscordModules;
     
     return class extends Plugin {
-        constructor() {
-            super();
-            this.defaultSettings = {};
-            this.defaultSettings.github = true;
-
-            /* ADVANCED SETTINGS */
-
-            this.defaultSettings.FXtwitter = false;
-            this.defaultSettings.VXtwitter = false;
-        }
 
         onStart() {
-            Logger.info("BetterIcons enabled!");
-            Patcher.before(DiscordModules.ChannelStore, "CHANNEL_SELECT", (_, args) => {
-                const event = args[0]
-                Logger.warn(event)
+            Logger.info("Plugin reviewDB enabled!");
+
+            Patcher.before(DiscordModules.UserNoteStore, "getNote", (t,a) => {
+                // If discord is getting a note then either the user is opening a user popout or the user is in a dm, either way we need to render the reviewDB.
+                Logger.info("Opened User Popout");
             });
+
         }
 
         onStop() {
             Patcher.unpatchAll();
-            Logger.info("BetterIcons disabled!");
+            Logger.info("Plugin reviewDB disabled!");
         }
 
         getSettingsPanel() {
             return Settings.SettingPanel.build(this.saveSettings.bind(this), 
-                new Settings.SettingGroup("General").append(
-                    new Settings.Switch("GitHub", "Enable GitHub icon", this.settings.github, (i) => {
-                        this.settings.github = i;
-                    })
-                ),
+                new Settings.Switch("Twitter","Remove twitter tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
+                new Settings.Switch("Reddit","Remove reddit tracking URL", this.settings.reddit, (i) => {this.settings.reddit = i;}),
+                new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => {this.settings.showToasts = i;}),
+                new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => {this.settings.project = i;}),
+
                 new Settings.SettingGroup("Advanced").append(
-                    new Settings.Switch("Guild list", "Select which guilds to enable the plugin for", this.settings.FXtwitter, (i) => {
-                        this.settings.FXtwitter = i;
-                    })
-                )
+                    new Settings.Switch("FXtwitter","Automatically convert twitter links to FXtwitter links", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
+                    new Settings.Switch("VXtwitter","Automatically convert twitter links to VXtwitter links", this.settings.VXtwitter, (i) => {this.settings.VXtwitter = i;})
+                ),
             );
         }
     };

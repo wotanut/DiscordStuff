@@ -1,0 +1,26 @@
+{
+    "info":{
+        "name": "tokenReset",
+        "authors": [{
+            "name": "Sambot",
+            "discord_id": "705798778472366131",
+            "github_username": "wotanut",
+            "twitter_username": "wotanut1",
+            "authorLink": "https://github.com/wotanut"
+        }],
+        "version": "1.0.2",
+        "description": "Resets your token by right clicking on the home icon.",
+        "website": "https://sblue.tech",
+        "github": "https://github.com/wotanut/betterdiscordstuff",
+        "github_raw": "https://raw.githubusercontent.com/wotanut/BetterDiscordStuff/main/plugins/removeTrackingURL/dist/removeTrackingURL.plugin.js?token=GHSAT0AAAAAABYFCAO3ZC3LX7WVQBVZVOR2Y3EJB7Q",
+        "donate": "https://ko-fi.com/wotanut",
+        "invite": "2w5KSXjhGe"
+    },
+    "changelog": [
+        {"title": "New Stuff", "items": ["Functinoality."]}
+    ],
+    "defaultConfig": [
+
+    ],
+    "main": "index.js"
+}

@@ -28,10 +28,14 @@ module.exports = (Plugin, Library) => {
         }
 
         sanitizeUrls(content, regex) {
-            content.match(regex)
-                .forEach(url =>
-                    content = content.replace(url, url.split('?')[0])
-                );
+            var trackers = content.match(regex)
+
+            if (trackers == null) { return content; } // check if there's no trackers
+                
+            trackers.forEach( url =>
+                content = content.replace(url, url.split('?')[0])
+            );
+
             return content;
         }
 

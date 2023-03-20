@@ -7,31 +7,31 @@
 module.exports = (Plugin, Library) => {
 
     const {DiscordModules, Logger, Patcher, Settings, Toasts} = Library;
-    const {MessageActions,Dispatcher, ChannelStore} = DiscordModules;
+    const {GuildStore, GuildChannelsStore} = DiscordModules;
     
     return class extends Plugin {
         constructor() {
             super();
             this.defaultSettings = {};
             this.defaultSettings.github = true;
-
-            /* ADVANCED SETTINGS */
-
-            this.defaultSettings.FXtwitter = false;
-            this.defaultSettings.VXtwitter = false;
         }
 
         onStart() {
             Logger.info("BetterIcons enabled!");
-            Patcher.before(DiscordModules.ChannelStore, "CHANNEL_SELECT", (_, args) => {
+            Patcher.before(DiscordModules.GuildChannelsStore, "getChannels", (_, args) => {
                 const event = args[0]
                 Logger.warn(event)
+                Logger.info("Switching Guild");
             });
         }
 
         onStop() {
-            Patcher.unpatchAll();
+            // Patcher.unpatchAll();
             Logger.info("BetterIcons disabled!");
+        }
+
+        observer(e) {
+            Logger.info("Discord has been updated!");
         }
 
         getSettingsPanel() {

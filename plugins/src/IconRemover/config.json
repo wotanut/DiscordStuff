@@ -1,0 +1,26 @@
+{
+    "info":{
+        "name": "IconRemover",
+        "authors": [{
+            "name": "Sambot",
+            "discord_id": "705798778472366131",
+            "github_username": "wotanut",
+            "twitter_username": "wotanut1",
+            "authorLink": "https://github.com/wotanut"
+        }],
+        "version": "1.0.0",
+        "description": "Removes the notification icon from the home icon and pending friend request icon.",
+        "website": "https://sblue.tech",
+        "github": "https://github.com/wotanut/betterdiscordstuff",
+        "github_raw": "https://raw.githubusercontent.com/wotanut/DiscordStuff/main/plugins/dist/IconRemover.plugin.js",
+        "donate": "https://github.com/sponsors/wotanut",
+        "invite": "2w5KSXjhGe"
+    },
+    "changelog": [
+        {"title": "New Stuff", "items": ["Added mirror settings", "Changed internals", "Moved file around"]}
+    ],
+    "defaultConfig": [
+
+    ],
+    "main": "index.js"
+}
