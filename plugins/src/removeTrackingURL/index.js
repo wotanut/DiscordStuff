@@ -7,7 +7,7 @@
 module.exports = (Plugin, Library) => {
 
     const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
-    const { MessageActions, Dispatcher } = DiscordModules;
+    const { Dispatcher } = DiscordModules;
 
     const REGEX = {
         "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?\S+)/g,
