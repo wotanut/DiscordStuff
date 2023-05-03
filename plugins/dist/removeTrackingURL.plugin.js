@@ -119,6 +119,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             this.defaultSettings = {};
             this.defaultSettings.twitter = true;
             this.defaultSettings.reddit = true;
+            this.defaultSettings.spotify = true;
             this.defaultSettings.showToasts = false;
             this.defaultSettings.project = true;
 
