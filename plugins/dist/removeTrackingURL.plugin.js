@@ -30,7 +30,6 @@
         shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
     }
     WScript.Quit();
-
 @else@*/
 const config = {
     info: {
