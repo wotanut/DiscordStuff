@@ -30,7 +30,6 @@
         shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
     }
     WScript.Quit();
-
 @else@*/
 const config = {
     info: {
@@ -109,6 +108,8 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
     const REGEX = {
         "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?\S+)/g,
         "reddit": /((?:https|http)\:\/\/(?:www\.)?reddit\.com\/\S+)/g,
+        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g
+
     }
 
     return class extends Plugin {
@@ -117,6 +118,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             this.defaultSettings = {};
             this.defaultSettings.twitter = true;
             this.defaultSettings.reddit = true;
+            this.defaultSettings.spotify = true;
             this.defaultSettings.showToasts = false;
             this.defaultSettings.project = true;
 
@@ -184,6 +186,15 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                     }
                 }
             }
+            if (this.settings.spotify) {
+                if (msgcontent.includes("https://open.spotify.com")) {
+                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.spotify);
+                    
+                    if (this.settings.showToasts && isFromSomeoneEsle == false) {
+                        Toasts.success("Succesfully removed tracker from Spotify link!");
+        }
+    }
+}
 
             // Changes our new message back to the original message
             return msgcontent;
@@ -230,6 +241,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
                 new Settings.Switch("Twitter", "Remove twitter tracking URL", this.settings.twitter, (i) => { this.settings.twitter = i; }),
                 new Settings.Switch("Reddit", "Remove reddit tracking URL", this.settings.reddit, (i) => { this.settings.reddit = i; }),
+                new Settings.Switch("Spotify", "Remove Spotify tracking URL", this.settings.spotify, (i) => { this.settings.spotify = i; }),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
