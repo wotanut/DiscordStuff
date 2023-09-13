@@ -51,12 +51,11 @@ module.exports = (Plugin, Library) => {
             // example of a twitter link 
             // https://twitter.com/SoVeryBritish/status/1555115704839553024?s=20&t=a2A24ImVWWDElGic3hTwNg
 
-
+            // if it includes the twitter or x url then it'll flow down here and appropriately remove the trackers and update the url.
+            // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
             if (this.settings.twitter) {
                 if (msgcontent.includes("https://twitter.com")) {
 
-                    // if it includes the twitter url then it'll flow down here and appropriately remove the trackers and update the url.
-                    // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.twitter);
 
                     if (this.settings.VXtwitter) {
@@ -67,6 +66,22 @@ module.exports = (Plugin, Library) => {
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
                         Toasts.success("Succesfully removed tracker from twitter link!");
+                    }
+                } else if (msgcontent.includes("https://x.com")) {
+                    var tweet = new URL(/(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g.exec(msgcontent));
+
+                    msgcontent = msgcontent.replace(/(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g, tweet.origin + tweet.pathname);
+
+                    if (this.settings.VXtwitter) {
+                        msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
+                    }
+                    else if(this.settings.FXtwitter) {
+                        msgcontent = msgcontent.replace("https://x.com", "https://fixupx.com");
+                    }
+
+                    if (this.settings.showToasts && isFromSomeoneEsle == false)
+                    {
+                        Toasts.success("Succesfully removed tracker from x link!");
                     }
                 }
             }
@@ -141,15 +156,15 @@ module.exports = (Plugin, Library) => {
 
         getSettingsPanel() {
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
-                new Settings.Switch("Twitter", "Remove twitter tracking URL", this.settings.twitter, (i) => { this.settings.twitter = i; }),
+                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
                 new Settings.Switch("Reddit", "Remove reddit tracking URL", this.settings.reddit, (i) => { this.settings.reddit = i; }),
                 new Settings.Switch("Spotify", "Remove Spotify tracking URL", this.settings.spotify, (i) => { this.settings.spotify = i; }),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
                 new Settings.SettingGroup("Advanced").append(
-                    new Settings.Switch("FXtwitter", "Automatically convert twitter links to FXtwitter links", this.settings.FXtwitter, (i) => { this.settings.FXtwitter = i; }),
-                    new Settings.Switch("VXtwitter", "Automatically convert twitter links to VXtwitter links", this.settings.VXtwitter, (i) => { this.settings.VXtwitter = i; })
+                    new Settings.Switch("FXtwitter/FixUpX","Automatically convert twitter and x links to FXtwitter/FixupX links respectively", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
+                    new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", this.settings.VXtwitter, (i) => {this.settings.VXtwitter = i;})
                 ),
             );
         }
