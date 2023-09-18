@@ -154,7 +154,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                         msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
                     } else if (this.settings.FXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
-                        msgcontent = msgcontent.replace("https://x.com", "https://fixupx.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://fxtwitter.com");
                     }
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
