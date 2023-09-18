@@ -6,13 +6,14 @@
  */
 module.exports = (Plugin, Library) => {
 
-    const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
+    const { DiscordModules, Patcher, Settings, Toasts } = Library;
     const { Dispatcher } = DiscordModules;
 
     const REGEX = {
         "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?*\S+)/g,
         "reddit": /((?:https|http)\:\/\/(?:www\.)?reddit\.com\/\S+)/g,
-        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g
+        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g,
+        "x": /(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g
     }
 
     return class extends Plugin {
@@ -54,34 +55,21 @@ module.exports = (Plugin, Library) => {
             // if it includes the twitter or x url then it'll flow down here and appropriately remove the trackers and update the url.
             // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
             if (this.settings.twitter) {
-                if (msgcontent.includes("https://twitter.com")) {
+                if (msgcontent.includes("https://twitter.com") || msgcontent.includes("https://x.com")) {
 
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.twitter);
+                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.x); // just in case it's a stupid X link
 
                     if (this.settings.VXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
                     } else if (this.settings.FXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://fixupx.com");
                     }
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
                         Toasts.success("Succesfully removed tracker from twitter link!");
-                    }
-                } else if (msgcontent.includes("https://x.com")) {
-                    var tweet = new URL(/(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g.exec(msgcontent));
-
-                    msgcontent = msgcontent.replace(/(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g, tweet.origin + tweet.pathname);
-
-                    if (this.settings.VXtwitter) {
-                        msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
-                    }
-                    else if(this.settings.FXtwitter) {
-                        msgcontent = msgcontent.replace("https://x.com", "https://fixupx.com");
-                    }
-
-                    if (this.settings.showToasts && isFromSomeoneEsle == false)
-                    {
-                        Toasts.success("Succesfully removed tracker from x link!");
                     }
                 }
             }

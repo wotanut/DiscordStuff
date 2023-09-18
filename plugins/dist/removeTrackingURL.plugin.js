@@ -30,6 +30,7 @@
         shell.Popup("I'm installed!", 0, "Successfully installed", 0x40);
     }
     WScript.Quit();
+
 @else@*/
 const config = {
     info: {
@@ -53,19 +54,11 @@ const config = {
     },
     changelog: [
         {
-            title: "New Stuff",
-            items: [
-                "Added mirror settings",
-                "Changed internals",
-                "Moved file around"
-            ]
-        },
-        {
             title: "Bug Fixes",
             type: "fixed",
             items: [
-                "Fixed a bug where the plugin would not change reddit links",
-                "Fixed a bug where plugin would send http,www after removing trackers."
+                "Made code more readable.",
+                "Fixed bug where plugin would crash if no trackers were present."
             ]
         }
     ],
@@ -102,14 +95,14 @@ if (!global.ZeresPluginLibrary) {
 module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
      const plugin = (Plugin, Library) => {
 
-    const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
-    const { MessageActions, Dispatcher } = DiscordModules;
+    const { DiscordModules, Patcher, Settings, Toasts } = Library;
+    const { Dispatcher } = DiscordModules;
 
     const REGEX = {
-        "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?\S+)/g,
+        "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?*\S+)/g,
         "reddit": /((?:https|http)\:\/\/(?:www\.)?reddit\.com\/\S+)/g,
-        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g
-
+        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g,
+        "x": /(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g
     }
 
     return class extends Plugin {
@@ -118,7 +111,6 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             this.defaultSettings = {};
             this.defaultSettings.twitter = true;
             this.defaultSettings.reddit = true;
-            this.defaultSettings.spotify = true;
             this.defaultSettings.showToasts = false;
             this.defaultSettings.project = true;
 
@@ -149,18 +141,20 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
             // example of a twitter link 
             // https://twitter.com/SoVeryBritish/status/1555115704839553024?s=20&t=a2A24ImVWWDElGic3hTwNg
 
-
+            // if it includes the twitter or x url then it'll flow down here and appropriately remove the trackers and update the url.
+            // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
             if (this.settings.twitter) {
-                if (msgcontent.includes("https://twitter.com")) {
+                if (msgcontent.includes("https://twitter.com") || msgcontent.includes("https://x.com")) {
 
-                    // if it includes the twitter url then it'll flow down here and appropriately remove the trackers and update the url.
-                    // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.twitter);
+                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.x); // just in case it's a stupid X link
 
                     if (this.settings.VXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
                     } else if (this.settings.FXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://fixupx.com");
                     }
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
@@ -186,10 +180,10 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                     }
                 }
             }
-            if (this.settings.spotify) {
+             if (this.settings.spotify) {
                 if (msgcontent.includes("https://open.spotify.com")) {
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.spotify);
-                    
+
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
                         Toasts.success("Succesfully removed tracker from Spotify link!");
         }
@@ -239,15 +233,15 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
 
         getSettingsPanel() {
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
-                new Settings.Switch("Twitter", "Remove twitter tracking URL", this.settings.twitter, (i) => { this.settings.twitter = i; }),
+                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
                 new Settings.Switch("Reddit", "Remove reddit tracking URL", this.settings.reddit, (i) => { this.settings.reddit = i; }),
                 new Settings.Switch("Spotify", "Remove Spotify tracking URL", this.settings.spotify, (i) => { this.settings.spotify = i; }),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
                 new Settings.SettingGroup("Advanced").append(
-                    new Settings.Switch("FXtwitter", "Automatically convert twitter links to FXtwitter links", this.settings.FXtwitter, (i) => { this.settings.FXtwitter = i; }),
-                    new Settings.Switch("VXtwitter", "Automatically convert twitter links to VXtwitter links", this.settings.VXtwitter, (i) => { this.settings.VXtwitter = i; })
+                    new Settings.Switch("FXtwitter/FixUpX","Automatically convert twitter and x links to FXtwitter/FixupX links respectively", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
+                    new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", this.settings.VXtwitter, (i) => {this.settings.VXtwitter = i;})
                 ),
             );
         }
