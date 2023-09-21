@@ -6,13 +6,14 @@
  */
 module.exports = (Plugin, Library) => {
 
-    const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
+    const { DiscordModules, Patcher, Settings, Toasts } = Library;
     const { Dispatcher } = DiscordModules;
 
     const REGEX = {
         "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?*\S+)/g,
         "reddit": /((?:https|http)\:\/\/(?:www\.)?reddit\.com\/\S+)/g,
-        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g
+        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g,
+        "x": /(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g
     }
 
     return class extends Plugin {
@@ -51,18 +52,20 @@ module.exports = (Plugin, Library) => {
             // example of a twitter link 
             // https://twitter.com/SoVeryBritish/status/1555115704839553024?s=20&t=a2A24ImVWWDElGic3hTwNg
 
-
+            // if it includes the twitter or x url then it'll flow down here and appropriately remove the trackers and update the url.
+            // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
             if (this.settings.twitter) {
-                if (msgcontent.includes("https://twitter.com")) {
+                if (msgcontent.includes("https://twitter.com") || msgcontent.includes("https://x.com")) {
 
-                    // if it includes the twitter url then it'll flow down here and appropriately remove the trackers and update the url.
-                    // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.twitter);
+                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.x); // just in case it's a stupid X link
 
                     if (this.settings.VXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
                     } else if (this.settings.FXtwitter) {
                         msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
+                        msgcontent = msgcontent.replace("https://x.com", "https://fxtwitter.com");
                     }
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
@@ -141,15 +144,15 @@ module.exports = (Plugin, Library) => {
 
         getSettingsPanel() {
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
-                new Settings.Switch("Twitter", "Remove twitter tracking URL", this.settings.twitter, (i) => { this.settings.twitter = i; }),
+                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
                 new Settings.Switch("Reddit", "Remove reddit tracking URL", this.settings.reddit, (i) => { this.settings.reddit = i; }),
                 new Settings.Switch("Spotify", "Remove Spotify tracking URL", this.settings.spotify, (i) => { this.settings.spotify = i; }),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
                 new Settings.SettingGroup("Advanced").append(
-                    new Settings.Switch("FXtwitter", "Automatically convert twitter links to FXtwitter links", this.settings.FXtwitter, (i) => { this.settings.FXtwitter = i; }),
-                    new Settings.Switch("VXtwitter", "Automatically convert twitter links to VXtwitter links", this.settings.VXtwitter, (i) => { this.settings.VXtwitter = i; })
+                    new Settings.Switch("FXtwitter/FixUpX","Automatically convert twitter and x links to FXtwitter/FixupX links respectively", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
+                    new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", this.settings.VXtwitter, (i) => {this.settings.VXtwitter = i;})
                 ),
             );
         }
