@@ -6,7 +6,7 @@
  */
 module.exports = (Plugin, Library) => {
 
-    const { DiscordModules, Patcher, Settings, Toasts } = Library;
+    const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
     const { Dispatcher } = DiscordModules;
 
     const REGEX = {

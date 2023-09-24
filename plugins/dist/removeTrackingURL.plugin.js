@@ -95,7 +95,7 @@ if (!global.ZeresPluginLibrary) {
 module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
      const plugin = (Plugin, Library) => {
 
-    const { DiscordModules, Patcher, Settings, Toasts } = Library;
+    const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
     const { Dispatcher } = DiscordModules;
 
     const REGEX = {
