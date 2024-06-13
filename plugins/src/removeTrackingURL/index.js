@@ -16,6 +16,17 @@ module.exports = (Plugin, Library) => {
         "x": /(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g
     }
 
+    class Site {
+        constructor(name, on, domains, tracker_param_regex, regex, replace_domains) {
+            this.name = name;
+            this.on = on;
+            this.domains = domains;
+            this.tracker_param_regex = tracker_param_regex;
+            this.regex = regex;
+            this.replace_domain = replace_domain;
+        }
+    }
+
     return class extends Plugin {
         constructor() {
             super();
