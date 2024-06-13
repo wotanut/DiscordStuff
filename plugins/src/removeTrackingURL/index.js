@@ -57,7 +57,7 @@ module.exports = (Plugin, Library) => {
         checkFor(content, showToasts, isFromSomeoneElse) {
             if (!this.on) { return content; }
 
-            if (!this.domains.some(domain => content.includes(domain))) {
+            if (this.domains.some(domain => content.includes(domain))) {
                 var [new_content, changed] = this.sanitizeUrls(content);
 
                 if (this.replace_domain != null && this.replace_domain != "") {
