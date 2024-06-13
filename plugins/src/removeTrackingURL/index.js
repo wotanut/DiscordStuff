@@ -27,6 +27,14 @@ module.exports = (Plugin, Library) => {
         }
     }
 
+    const DEFAULT_SITES = {
+        "twitter": new Site("Twitter", true, ["twitter.com", "x.com"], /(.+)/g, /((https?:\/\/)?(www\.)?(twitter|x).com\/\w+\/status\/\d+\?\S+)/g, null),
+        "reddit": new Site("Reddit", true, ["reddit.com"], /(.+)/g, /((https?:\/\/)?(www\.)?reddit\.com\/\S+)/g, null)
+        "spotify": new Site("Spotify", true, ["open.spotify.com"], /(.+)/g, /((https?:\/\/)?(www\.)?open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g, null)
+    }
+
+    // I'm hoping to add ability for custom sites to be added soon.
+
     return class extends Plugin {
         constructor() {
             super();
