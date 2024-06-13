@@ -17,7 +17,7 @@ module.exports = (Plugin, Library) => {
     }
 
     class Site {
-        constructor(name, on, domains, tracker_param_regex, regex, replace_domains) {
+        constructor(name, on, domains, tracker_param_regex, regex, replace_domain) {
             this.name = name;
             this.on = on;
             this.domains = domains;
@@ -38,15 +38,16 @@ module.exports = (Plugin, Library) => {
 
             if (trackers == null) { return [content, changed]; } // check if there's no trackers
 
-            trackers.forEach( url =>
-                var split_content = url.split('?')[0]
-                var cleaned = this.cleanTrackers(split_content[1])
-                if (cleaned != split_content[1]) {
-                    changed = true
-                    content = content.replace(
-                        url,
-                        [split_content[0], cleaned].join('?')
-                    )
+            trackers.forEach( url => {
+                    var split_content = url.split('?')[0]
+                    var cleaned = this.cleanTrackers(split_content[1])
+                    if (cleaned != split_content[1]) {
+                        changed = true
+                        content = content.replace(
+                            url,
+                            [split_content[0], cleaned].join('?')
+                        )
+                    }
                 }
             );
 
@@ -81,7 +82,7 @@ module.exports = (Plugin, Library) => {
 
     const DEFAULT_SITES = {
         "twitter": new Site("Twitter", true, ["twitter.com", "x.com"], /(.+)/g, /((https?:\/\/)?(www\.)?(twitter|x).com\/\w+\/status\/\d+\?\S+)/g, null),
-        "reddit": new Site("Reddit", true, ["reddit.com"], /(.+)/g, /((https?:\/\/)?(www\.)?reddit\.com\/\S+)/g, null)
+        "reddit": new Site("Reddit", true, ["reddit.com"], /(.+)/g, /((https?:\/\/)?(www\.)?reddit\.com\/\S+)/g, null),
         "spotify": new Site("Spotify", true, ["open.spotify.com"], /(.+)/g, /((https?:\/\/)?(www\.)?open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g, null)
     }
 
@@ -118,57 +119,11 @@ module.exports = (Plugin, Library) => {
             } else {
                 var msgcontent = event[1].content
             }
-            // twitter
 
-            // example of a twitter link 
-            // https://twitter.com/SoVeryBritish/status/1555115704839553024?s=20&t=a2A24ImVWWDElGic3hTwNg
-
-            // if it includes the twitter or x url then it'll flow down here and appropriately remove the trackers and update the url.
-            // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
-            if (this.settings.twitter) {
-                if (msgcontent.includes("twitter.com") || msgcontent.includes("x.com")) {
-
-                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.twitter);
-                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.x); // just in case it's a stupid X link
-
-                    if (this.settings.VXtwitter) {
-                        msgcontent = msgcontent.replace("twitter.com", "c.vxtwitter.com");
-                        msgcontent = msgcontent.replace("x.com", "c.vxtwitter.com");
-                    } else if (this.settings.FXtwitter) {
-                        msgcontent = msgcontent.replace("twitter.com", "fxtwitter.com");
-                        msgcontent = msgcontent.replace("x.com", "fxtwitter.com");
-                    }
-
-                    if (this.settings.showToasts && isFromSomeoneEsle == false) {
-                        Toasts.success("Succesfully removed tracker from twitter link!");
-                    }
-                }
-            }
-
-            // reddit
-
-            // example of a reddit link 
-            //  https://www.reddit.com/r/GCSE/comments/kv1pny/leak_of_gcse_algorithm_to_find_grades/?utm_source=share&utm_medium=web2x&context=3
-
-            if (this.settings.reddit) {
-                if (msgcontent.includes("reddit.com")) {
-                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.reddit);
-
-                    // NOTE: The .split is required becuase of this issue
-                    // https://stackoverflow.com/questions/74923286/url-pathname-sending-the-pathname-followed-by-https-www
-
-                    if (this.settings.showToasts && isFromSomeoneEsle == false) {
-                        Toasts.success("Succesfully removed tracker from reddit link!");
-                    }
-                }
-            }
-            if (this.settings.spotify) {
-                if (msgcontent.includes("open.spotify.com")) {
-                    msgcontent = this.sanitizeUrls(msgcontent, REGEX.spotify);
-
-                    if (this.settings.showToasts && isFromSomeoneEsle == false) {
-                        Toasts.success("Succesfully removed tracker from Spotify link!");
-                    }
+            for (var name in DEFAULT_SITES) {
+                msgcontent = DEFAULT_SITES[name].checkFor(msgcontent, this.showToasts, isFromSomeoneEsle)
+                if (p.hasOwnProperty(key)) {
+                    console.log(key + " -> " + p[key]);
                 }
             }
 
