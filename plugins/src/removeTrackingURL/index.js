@@ -9,13 +9,6 @@ module.exports = (Plugin, Library) => {
     const { DiscordModules, Logger, Patcher, Settings, Toasts } = Library;
     const { Dispatcher } = DiscordModules;
 
-    const REGEX = {
-        "twitter": /(https:\/\/twitter.com\/\w+\/status\/\d+\?*\S+)/g,
-        "reddit": /((?:https|http)\:\/\/(?:www\.)?reddit\.com\/\S+)/g,
-        "spotify": /(https:\/\/open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g,
-        "x": /(https:\/\/x.com\/\w+\/status\/\d+\?[a-zA-Z0-9=&]*)/g
-    }
-
     class Site {
         constructor(name, on, domains, tracker_param_regex, regex, replace_domain) {
             this.name = name;
@@ -61,7 +54,7 @@ module.exports = (Plugin, Library) => {
                 var [new_content, changed] = this.sanitizeUrls(content);
 
                 if (this.replace_domain != null && this.replace_domain != "") {
-                    this.domains.forEach*( domain =>
+                    this.domains.forEach( domain =>
                         new_content = new_content.replace(domain, this.replace_domain))
                 }
 
@@ -99,18 +92,6 @@ module.exports = (Plugin, Library) => {
 
             this.defaultSettings.FXtwitter = false;
             this.defaultSettings.VXtwitter = false;
-        }
-
-        sanitizeUrls(content, regex) {
-            var trackers = content.match(regex)
-
-            if (trackers == null) { return content; } // check if there's no trackers
-                
-            trackers.forEach( url =>
-                content = content.replace(url, url.split('?')[0])
-            );
-
-            return content;
         }
 
         removeTracker(event, isFromSomeoneEsle = false) {
