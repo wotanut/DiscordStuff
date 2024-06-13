@@ -25,6 +25,49 @@ module.exports = (Plugin, Library) => {
             this.regex = regex;
             this.replace_domain = replace_domain;
         }
+
+        cleanTrackers(content) {
+            return content.split('&').filter(
+                variable => variable.split("=")[0].match(this.tracker_param_regex) != null
+                ).join('&');
+        }
+
+        sanitizeUrls(content) {
+            var trackers = content.match(this.regex)
+            var changed = false
+
+            if (trackers == null) { return [content, changed]; } // check if there's no trackers
+
+            trackers.forEach( url =>
+                var split_content = url.split('?')[0]
+                var cleaned = this.cleanTrackers(split_content[1])
+                if (cleaned != split_content[1]) {
+                    changed = true
+                    content = content.replace(
+                        url,
+                        [split_content[0], cleaned].join('?')
+                    )
+                }
+            );
+
+            return [content, changed];
+        }
+
+        checkFor(content, showToasts, isFromSomeoneElse) {
+            if (!this.on) { return content; }
+
+            if (!this.domains.some(domain => content.includes(domain))) {
+                var [new_content, changed] = this.sanitizeUrls(content);
+
+                if (showToasts && changed) {
+                    if (isFromSomeoneElse) {
+                        Toasts.success("Succesfully removed tracker from incoming " + this.name + " link!");
+                    } else {
+                        Toasts.success("Succesfully removed tracker from " + this.name + " link!");
+                    }
+                }
+            }
+        }
     }
 
     const DEFAULT_SITES = {
