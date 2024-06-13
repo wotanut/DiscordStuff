@@ -28,7 +28,7 @@ module.exports = (Plugin, Library) => {
 
         cleanTrackers(content) {
             return content.split('&').filter(
-                variable => variable.split("=")[0].match(this.tracker_param_regex) != null
+                variable => variable.split("=")[0].match(this.tracker_param_regex) == null
                 ).join('&');
         }
 
