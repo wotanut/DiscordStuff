@@ -59,6 +59,11 @@ module.exports = (Plugin, Library) => {
             if (!this.domains.some(domain => content.includes(domain))) {
                 var [new_content, changed] = this.sanitizeUrls(content);
 
+                if (this.replace_domain != null && this.replace_domain != "") {
+                    this.domains.forEach*( domain =>
+                        new_content = new_content.replace(domain, this.replace_domain))
+                }
+
                 if (showToasts && changed) {
                     if (isFromSomeoneElse) {
                         Toasts.success("Succesfully removed tracker from incoming " + this.name + " link!");
