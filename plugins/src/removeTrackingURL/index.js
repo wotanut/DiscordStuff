@@ -71,7 +71,11 @@ module.exports = (Plugin, Library) => {
                         Toasts.success("Succesfully removed tracker from " + this.name + " link!");
                     }
                 }
+
+                return new_content;
             }
+
+            return content;
         }
     }
 
