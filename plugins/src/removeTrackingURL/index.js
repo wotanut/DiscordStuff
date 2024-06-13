@@ -55,17 +55,17 @@ module.exports = (Plugin, Library) => {
             // if it includes the twitter or x url then it'll flow down here and appropriately remove the trackers and update the url.
             // note: for those of you who /care/ so much about speed you will get a very slight performance increase if you use VXtwitter.
             if (this.settings.twitter) {
-                if (msgcontent.includes("https://twitter.com") || msgcontent.includes("https://x.com")) {
+                if (msgcontent.includes("twitter.com") || msgcontent.includes("x.com")) {
 
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.twitter);
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.x); // just in case it's a stupid X link
 
                     if (this.settings.VXtwitter) {
-                        msgcontent = msgcontent.replace("https://twitter.com", "https://c.vxtwitter.com");
-                        msgcontent = msgcontent.replace("https://x.com", "https://c.vxtwitter.com");
+                        msgcontent = msgcontent.replace("twitter.com", "c.vxtwitter.com");
+                        msgcontent = msgcontent.replace("x.com", "c.vxtwitter.com");
                     } else if (this.settings.FXtwitter) {
-                        msgcontent = msgcontent.replace("https://twitter.com", "https://fxtwitter.com");
-                        msgcontent = msgcontent.replace("https://x.com", "https://fxtwitter.com");
+                        msgcontent = msgcontent.replace("twitter.com", "fxtwitter.com");
+                        msgcontent = msgcontent.replace("x.com", "fxtwitter.com");
                     }
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
@@ -80,7 +80,7 @@ module.exports = (Plugin, Library) => {
             //  https://www.reddit.com/r/GCSE/comments/kv1pny/leak_of_gcse_algorithm_to_find_grades/?utm_source=share&utm_medium=web2x&context=3
 
             if (this.settings.reddit) {
-                if (msgcontent.includes("https://www.reddit.com")) {
+                if (msgcontent.includes("reddit.com")) {
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.reddit);
 
                     // NOTE: The .split is required becuase of this issue
@@ -91,15 +91,15 @@ module.exports = (Plugin, Library) => {
                     }
                 }
             }
-             if (this.settings.spotify) {
-                if (msgcontent.includes("https://open.spotify.com")) {
+            if (this.settings.spotify) {
+                if (msgcontent.includes("open.spotify.com")) {
                     msgcontent = this.sanitizeUrls(msgcontent, REGEX.spotify);
 
                     if (this.settings.showToasts && isFromSomeoneEsle == false) {
                         Toasts.success("Succesfully removed tracker from Spotify link!");
-        }
-    }
-}
+                    }
+                }
+            }
 
             // Changes our new message back to the original message
             return msgcontent;
