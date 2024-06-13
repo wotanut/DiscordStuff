@@ -121,10 +121,7 @@ module.exports = (Plugin, Library) => {
             }
 
             for (var name in DEFAULT_SITES) {
-                msgcontent = DEFAULT_SITES[name].checkFor(msgcontent, this.showToasts, isFromSomeoneEsle)
-                if (p.hasOwnProperty(key)) {
-                    console.log(key + " -> " + p[key]);
-                }
+                msgcontent = DEFAULT_SITES[name].checkFor(msgcontent, this.showToasts, isFromSomeoneEsle);
             }
 
             // Changes our new message back to the original message
