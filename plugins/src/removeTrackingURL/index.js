@@ -145,9 +145,9 @@ module.exports = (Plugin, Library) => {
             Logger.info("Enabling removeTrackingURL!");
 
             // make sure to load settings correctly
-            retrieveSettings();
+            this.retrieveSettings();
             // make sure settings are set up correctly (if on first launch, populates defaultSites dict, and also cleans up data from past versions)
-            updateSettings();
+            this.updateSettings();
 
             // for removing trackers on sent messages
 
@@ -185,9 +185,9 @@ module.exports = (Plugin, Library) => {
 
         getSettingsPanel() {
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
-                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", DEFAULT_SITES.twitter.on, (i) => {DEFAULT_SITES.twitter.on = i; updateSettings(); }),
-                new Settings.Switch("Reddit", "Remove reddit tracking URL", DEFAULT_SITES.reddit.on, (i) => { DEFAULT_SITES.reddit.on = i; updateSettings(); }),
-                new Settings.Switch("Spotify", "Remove Spotify tracking URL", DEFAULT_SITES.spotify.on, (i) => { DEFAULT_SITES.spotify.on = i; updateSettings(); }),
+                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", DEFAULT_SITES.twitter.on, (i) => { DEFAULT_SITES.twitter.on = i; this.updateSettings(); }),
+                new Settings.Switch("Reddit", "Remove reddit tracking URL", DEFAULT_SITES.reddit.on, (i) => { DEFAULT_SITES.reddit.on = i; this.updateSettings(); }),
+                new Settings.Switch("Spotify", "Remove Spotify tracking URL", DEFAULT_SITES.spotify.on, (i) => { DEFAULT_SITES.spotify.on = i; this.updateSettings(); }),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
