@@ -186,7 +186,7 @@ module.exports = (Plugin, Library) => {
         getSettingsPanel() {
 
             // I tried to make these mutually exclusive.  Can't make the react element update, though.
-            const fxtwSwitch = new Settings.Switch("FXtwitter/FixUpX","Automatically convert twitter and x links to FXtwitter links", DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com", (i) => {
+            const fxtwSwitch = new Settings.Switch("FXtwitter","Automatically convert twitter and x links to FXtwitter links", DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com", (i) => {
                 if (i) {
                     DEFAULT_SITES.twitter.replace_domain = "fxtwitter.com";
                 } else if (DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com") {
