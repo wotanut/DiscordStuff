@@ -168,14 +168,10 @@ module.exports = (Plugin, Library) => {
 
                 if (event.type === "MESSAGE_CREATE") {
                     if (this.settings.project) {
-                        if (event.message.content.includes(".reddit.com") == false && event.message.content.includes(".twitter.com") == false) {
-                            return;
-                        }
                         if (event.message.author.id == DiscordModules.UserStore.getCurrentUser().id) {
                             return;
                         }
                         event.message.content = this.removeTracker(event.message.content, true);
-                        Logger.info("Removed Message");
                     }
                 }
             });
