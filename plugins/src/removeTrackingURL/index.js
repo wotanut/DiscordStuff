@@ -85,13 +85,45 @@ module.exports = (Plugin, Library) => {
         constructor() {
             super();
             this.defaultSettings = {};
-            this.defaultSettings.twitter = true;
-            this.defaultSettings.reddit = true;
+            this.defaultSettings.defaultSites = {};
             this.defaultSettings.showToasts = false;
             this.defaultSettings.project = true;
+        }
 
-            this.defaultSettings.FXtwitter = false;
-            this.defaultSettings.VXtwitter = false;
+        // this is really scuffed, pretty much like this because I don't know how BD persistence really works.
+        updateSettings() {
+            for (var name in DEFAULT_SITES) {
+                // update defaultSites settings dict with if the site is on and if they're replacing the domain to a value
+                this.settings.defaultSites[name] = [DEFAULT_SITES[name].on, DEFAULT_SITES[name].replace_domain]
+            }
+        }
+
+        // see above for comment on scuffedness
+        loadSettings() {
+            // retrieve old settings from previous version (backwards compatibility is hard)
+            for (var name in DEFAULT_SITES) {
+                if (this.settings.hasOwnProperty(name)) {
+                    DEFAULT_SITES[name].on = this.settings[name];
+                    // this.settings.remove(name); // keep commented until certain everything works
+                }
+            }
+
+            // * special cases *
+            if (this.settings.hasOwnProperty("VXtwitter")) {
+                DEFAULT_SITES.twitter.replace_domain = "c.vxtwitter.com";
+                // this.settings.remove("VXtwitter"); // keep commented until certain everything works
+            }
+            if (this.settings.hasOwnProperty("FXtwitter")) {
+                // this one was said to differentiate between twitter and x links.  Did at one point, not anymore.
+                // https://github.com/wotanut/DiscordStuff/commit/daf88efa71631af5a8b0dadb1760153f1dad8997
+                DEFAULT_SITES.twitter.replace_domain = "fxtwitter.com";
+                // this.settings.remove("VXtwitter"); // keep commented until certain everything works
+            }
+
+            // update what is there in settings.defaultSites
+            for (var name in this.settings.defaultSites) {
+                [DEFAULT_SITES[name].on, DEFAULT_SITES[name].replace_domain] = this.settings.defaultSites[name]
+            }
         }
 
         removeTracker(event, isFromSomeoneEsle = false) {
@@ -111,6 +143,11 @@ module.exports = (Plugin, Library) => {
 
         onStart() {
             Logger.info("Enabling removeTrackingURL!");
+
+            // make sure to load settings correctly
+            loadSettings();
+            // make sure settings are set up correctly (if on first launch, populates defaultSites dict, and also cleans up data from past versions)
+            updateSettings();
 
             // for removing trackers on sent messages
 
