@@ -32,7 +32,7 @@ module.exports = (Plugin, Library) => {
             if (trackers == null) { return [content, changed]; } // check if there's no trackers
 
             trackers.forEach( url => {
-                    var split_content = url.split('?')[0]
+                    var split_content = url.split('?')
                     var cleaned = this.cleanTrackers(split_content[1])
                     if (cleaned != split_content[1]) {
                         changed = true
