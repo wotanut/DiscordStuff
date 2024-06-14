@@ -131,7 +131,7 @@ module.exports = (Plugin, Library) => {
         }
 
         removeTracker(event, isFromSomeoneElse = false) {
-            if (isFromSomeoneEsle) {
+            if (isFromSomeoneElse) {
                 var msgcontent = event
             } else {
                 var msgcontent = event[1].content
