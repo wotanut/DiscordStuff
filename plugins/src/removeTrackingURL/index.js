@@ -99,7 +99,7 @@ module.exports = (Plugin, Library) => {
         }
 
         // see above for comment on scuffedness
-        loadSettings() {
+        retrieveSettings() {
             // retrieve old settings from previous version (backwards compatibility is hard)
             for (var name in DEFAULT_SITES) {
                 if (this.settings.hasOwnProperty(name)) {
@@ -145,7 +145,7 @@ module.exports = (Plugin, Library) => {
             Logger.info("Enabling removeTrackingURL!");
 
             // make sure to load settings correctly
-            loadSettings();
+            retrieveSettings();
             // make sure settings are set up correctly (if on first launch, populates defaultSites dict, and also cleans up data from past versions)
             updateSettings();
 
