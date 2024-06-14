@@ -185,9 +185,9 @@ module.exports = (Plugin, Library) => {
 
         getSettingsPanel() {
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
-                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", this.settings.twitter, (i) => {this.settings.twitter = i;}),
-                new Settings.Switch("Reddit", "Remove reddit tracking URL", this.settings.reddit, (i) => { this.settings.reddit = i; }),
-                new Settings.Switch("Spotify", "Remove Spotify tracking URL", this.settings.spotify, (i) => { this.settings.spotify = i; }),
+                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", DEFAULT_SITES.twitter.on, (i) => {DEFAULT_SITES.twitter.on = i; updateSettings(); }),
+                new Settings.Switch("Reddit", "Remove reddit tracking URL", DEFAULT_SITES.reddit.on, (i) => { DEFAULT_SITES.reddit.on = i; updateSettings(); }),
+                new Settings.Switch("Spotify", "Remove Spotify tracking URL", DEFAULT_SITES.spotify.on, (i) => { DEFAULT_SITES.spotify.on = i; updateSettings(); }),
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
