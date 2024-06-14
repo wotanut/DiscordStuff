@@ -183,38 +183,52 @@ module.exports = (Plugin, Library) => {
             Logger.info("Disabling removeTrackingURL!");
         }
 
+        makeButton(name, displayName){
+            return new Settings.Switch(
+                displayName,
+                "Remove " + displayName + " tracking URLs",
+                DEFAULT_SITES[name].on,
+                (i) => { DEFAULT_SITES[name].on = i; this.updateSettings(); }
+            );
+        }
+
         getSettingsPanel() {
 
-            // I tried to make these mutually exclusive.  Can't make the react element update, though.
-            const fxtwSwitch = new Settings.Switch("FXtwitter","Automatically convert twitter and x links to FXtwitter links", DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com", (i) => {
-                if (i) {
-                    DEFAULT_SITES.twitter.replace_domain = "fxtwitter.com";
-                } else if (DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com") {
-                    DEFAULT_SITES.twitter.replace_domain = null;
-                }
-                this.updateSettings();
-            });
-            const vxtwSwitch = new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", DEFAULT_SITES.twitter.replace_domain == "c.vxtwitter.com", (i) => {
-                if (i) {
-                    DEFAULT_SITES.twitter.replace_domain = "c.vxtwitter.com";
-                } else if (DEFAULT_SITES.twitter.replace_domain == "c.vxtwitter.com") {
-                    DEFAULT_SITES.twitter.replace_domain = null;
-                }
-                this.updateSettings();
-            });
+            const panel = new Settings.SettingPanel(this.saveSettings.bind(this));
 
-            return Settings.SettingPanel.build(this.saveSettings.bind(this),
-                new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", DEFAULT_SITES.twitter.on, (i) => { DEFAULT_SITES.twitter.on = i; this.updateSettings(); }),
-                new Settings.Switch("Reddit", "Remove reddit tracking URL", DEFAULT_SITES.reddit.on, (i) => { DEFAULT_SITES.reddit.on = i; this.updateSettings(); }),
-                new Settings.Switch("Spotify", "Remove Spotify tracking URL", DEFAULT_SITES.spotify.on, (i) => { DEFAULT_SITES.spotify.on = i; this.updateSettings(); }),
+            // names seem to be in order of how they're put into the mapping, so not bothering to sort them
+            for (var name in DEFAULT_SITES) {
+                panel.append(this.makeButton(name, DEFAULT_SITES[name].name));
+            }
+
+            panel.append(
                 new Settings.Switch("Show Toasts", "Show a toast when removing trackers", this.settings.showToasts, (i) => { this.settings.showToasts = i; }),
-                new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
+                new Settings.Switch("Project", "When receiving an incoming message, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
+                // I tried to make these mutually exclusive.  Can't make the react element update, though.
+                // I also recommend against continuing to do this, because this is *not* the stated intent of the plugin.
+                // Other plugins (like SocialMediaLinkConverter and TextReplacer) do this job better
                 new Settings.SettingGroup("Advanced").append(
-                    fxtwSwitch,
-                    vxtwSwitch
+                    new Settings.Switch("FXtwitter","Automatically convert twitter and x links to FXtwitter links", DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com", (i) => {
+                        if (i) {
+                            DEFAULT_SITES.twitter.replace_domain = "fxtwitter.com";
+                        } else if (DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com") {
+                            DEFAULT_SITES.twitter.replace_domain = null;
+                        }
+                        this.updateSettings();
+                    }),
+                    new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", DEFAULT_SITES.twitter.replace_domain == "c.vxtwitter.com", (i) => {
+                        if (i) {
+                            DEFAULT_SITES.twitter.replace_domain = "c.vxtwitter.com";
+                        } else if (DEFAULT_SITES.twitter.replace_domain == "c.vxtwitter.com") {
+                            DEFAULT_SITES.twitter.replace_domain = null;
+                        }
+                        this.updateSettings();
+                    })
                 ),
             );
+
+            return panel;
         }
     };
 
