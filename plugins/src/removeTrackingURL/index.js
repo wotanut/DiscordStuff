@@ -77,7 +77,9 @@ module.exports = (Plugin, Library) => {
         "twitter": new Site("Twitter/X", true, ["twitter.com", "x.com"], /(.+)/g, /((https?:\/\/)?(www\.)?(twitter|x).com\/\w+\/status\/\d+\?\S+)/g, null),
         "reddit": new Site("Reddit", true, ["reddit.com"], /(.+)/g, /((https?:\/\/)?(www\.)?reddit\.com\/\S+)/g, null),
         "spotify": new Site("Spotify", true, ["open.spotify.com"], /(.+)/g, /((https?:\/\/)?(www\.)?open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g, null),
-        "youtube": new Site("Youtube", true, ["youtu.be"], /(si)/g, /((https?:\/\/)?(www\.)?youtu\.be\/\w+\?\S+)/g, null)
+        "youtube": new Site("Youtube", true, ["youtu.be"], /(si)/g, /((https?:\/\/)?(www\.)?youtu\.be\/\w+\?\S+)/g, null),
+        // I would be adding this, but I can't access AliExpress for some reason.  Oh no, how terrible...
+        // "aliexpress": new Site("AliExpress", true, ["aliexpress.us", "aliexpress.com"], /(.+)/g, /((https?:\/\/)?(www\.)?aliexpress.(us|com)\/\S+)/g, null)
     }
 
     // I'm hoping to add ability for custom sites to be added soon.
