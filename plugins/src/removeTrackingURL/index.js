@@ -184,6 +184,25 @@ module.exports = (Plugin, Library) => {
         }
 
         getSettingsPanel() {
+
+            // I tried to make these mutually exclusive.  Can't make the react element update, though.
+            const fxtwSwitch = new Settings.Switch("FXtwitter/FixUpX","Automatically convert twitter and x links to FXtwitter links", DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com", (i) => {
+                if (i) {
+                    DEFAULT_SITES.twitter.replace_domain = "fxtwitter.com";
+                } else if (DEFAULT_SITES.twitter.replace_domain == "fxtwitter.com") {
+                    DEFAULT_SITES.twitter.replace_domain = null;
+                }
+                this.updateSettings();
+            });
+            const vxtwSwitch = new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", DEFAULT_SITES.twitter.replace_domain == "c.vxtwitter.com", (i) => {
+                if (i) {
+                    DEFAULT_SITES.twitter.replace_domain = "c.vxtwitter.com";
+                } else if (DEFAULT_SITES.twitter.replace_domain == "c.vxtwitter.com") {
+                    DEFAULT_SITES.twitter.replace_domain = null;
+                }
+                this.updateSettings();
+            });
+
             return Settings.SettingPanel.build(this.saveSettings.bind(this),
                 new Settings.Switch("Twitter/X","Remove twitter and x tracking URL", DEFAULT_SITES.twitter.on, (i) => { DEFAULT_SITES.twitter.on = i; this.updateSettings(); }),
                 new Settings.Switch("Reddit", "Remove reddit tracking URL", DEFAULT_SITES.reddit.on, (i) => { DEFAULT_SITES.reddit.on = i; this.updateSettings(); }),
@@ -192,8 +211,8 @@ module.exports = (Plugin, Library) => {
                 new Settings.Switch("Project", "When recieving an incoming meesage, remove trackers from that too.", this.settings.project, (i) => { this.settings.project = i; }),
 
                 new Settings.SettingGroup("Advanced").append(
-                    new Settings.Switch("FXtwitter/FixUpX","Automatically convert twitter and x links to FXtwitter links", this.settings.FXtwitter, (i) => {this.settings.FXtwitter = i;}),
-                    new Settings.Switch("VXtwitter","Automatically convert twitter and x links to VXtwitter links", this.settings.VXtwitter, (i) => {this.settings.VXtwitter = i;})
+                    fxtwSwitch,
+                    vxtwSwitch
                 ),
             );
         }
