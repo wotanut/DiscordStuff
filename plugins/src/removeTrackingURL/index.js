@@ -126,7 +126,7 @@ module.exports = (Plugin, Library) => {
             }
         }
 
-        removeTracker(event, isFromSomeoneEsle = false) {
+        removeTracker(event, isFromSomeoneElse = false) {
             if (isFromSomeoneEsle) {
                 var msgcontent = event
             } else {
@@ -134,7 +134,7 @@ module.exports = (Plugin, Library) => {
             }
 
             for (var name in DEFAULT_SITES) {
-                msgcontent = DEFAULT_SITES[name].checkFor(msgcontent, this.settings.showToasts, isFromSomeoneEsle);
+                msgcontent = DEFAULT_SITES[name].checkFor(msgcontent, this.settings.showToasts, isFromSomeoneElse);
             }
 
             // Changes our new message back to the original message
