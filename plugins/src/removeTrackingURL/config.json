@@ -17,7 +17,7 @@
         "invite": "2w5KSXjhGe"
     },
     "changelog": [
-        {"title": "Bug Fixes", "type" : "fixed", "items": ["Made code more readable.", "Fixed bug where plugin would crash if no trackers were present."]}
+        {"title": "Added", "items": ["Added AliExpress (@koliwbr)"]
     ],
     "defaultConfig": [
 
