@@ -17,7 +17,8 @@
         "invite": "2w5KSXjhGe"
     },
     "changelog": [
-        {"title": "Refactor", "type" : "fixed", "items": ["Made code easier to update with new sites.", "Added Youtube links."]}
+        {"title": "Refactor", "type" : "fixed", "items": ["Made code easier to update with new sites. (@Firefly7-7)", "Added Youtube links.(@Firefly7-7)"]}
+        {"title": "Added", "items": ["Added AliExpress (@koliwbr)"]
     ],
     "defaultConfig": [
 

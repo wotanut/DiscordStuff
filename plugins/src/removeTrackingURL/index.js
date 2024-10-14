@@ -79,7 +79,7 @@ module.exports = (Plugin, Library) => {
         "spotify": new Site("Spotify", true, ["open.spotify.com"], /(.+)/g, /((https?:\/\/)?(www\.)?open\.spotify\.com\/(track|album|user|artist|playlist)\/\w+\?\S+)/g, null),
         "youtube": new Site("Youtube", true, ["youtu.be"], /(si)/g, /((https?:\/\/)?(www\.)?youtu\.be\/[^\s\?]+\?\S+)/g, null),
         // I would be adding this, but I can't access AliExpress for some reason.  Oh no, how terrible...
-        // "aliexpress": new Site("AliExpress", true, ["aliexpress.us", "aliexpress.com"], /(.+)/g, /((https?:\/\/)?(www\.)?aliexpress.(us|com)\/\S+)/g, null)
+        "aliexpress": new Site("AliExpress", true, ["aliexpress.us", "aliexpress.com"], /(.+)/g, /((https?:\/\/)?(www\.)?aliexpress.(us|com)\/\S+)/g, null)
     }
 
     // I'm hoping to add ability for custom sites to be added soon.
