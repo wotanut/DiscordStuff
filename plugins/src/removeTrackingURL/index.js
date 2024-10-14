@@ -228,7 +228,7 @@ module.exports = (Plugin, Library) => {
                 ),
             );
 
-            return panel;
+            return panel.GetElement();
         }
     };
 

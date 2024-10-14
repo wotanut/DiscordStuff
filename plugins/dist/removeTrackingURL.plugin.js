@@ -319,7 +319,7 @@ module.exports = !global.ZeresPluginLibrary ? Dummy : (([Plugin, Api]) => {
                 ),
             );
 
-            return panel;
+            return panel.GetElement();
         }
     };
 
